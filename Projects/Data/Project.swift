@@ -4,8 +4,12 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeProject(
     name: "Data",
-    moduleType: .staticFramework,
+    moduleType: .dynamicFramework,
     dependencies: [
-        .networks
+        .networkService,
+        .coreDataService
+    ],
+    coreDataModel: [
+        .init("../App/Resources/Model.xcdatamodeld")
     ]
 )

@@ -16,19 +16,10 @@ public final class {{ name }}ViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        bind()
     }
+    
+    private func configureUI() { }
+    private func bind() { }
 }
-
-#if DEBUG
-import SwiftUI
-import FeatureDependency
-struct {{ name }}ViewController_Preview: PreviewProvider {
-    static var previews: some View {
-        UIKitPreview(
-            {{ name }}ViewController(
-                viewModel: {{ name }}ViewModel()
-            )
-        )
-    }
-}
-#endif

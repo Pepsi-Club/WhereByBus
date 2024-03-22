@@ -8,7 +8,7 @@
 
 import UIKit
 
-import Networks
+import NetworkService
 import Domain
 import Data
 

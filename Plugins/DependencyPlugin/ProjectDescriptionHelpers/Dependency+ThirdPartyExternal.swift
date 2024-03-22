@@ -8,16 +8,14 @@
 import ProjectDescription
 
 public extension Array<TargetDependency> {
-    enum ThirdPartyExternal: CaseIterable {
-        case rxCocoa, kakaoMap
+    enum ThirdPartyExternal: String, CaseIterable {
+        case rxCocoa
         
         public var name: String {
-            switch self {
-            case .rxCocoa:
-                return "RxCocoa"
-            case .kakaoMap:
-                return "KakaoMapsSDK_SPM"
-            }
+            var name = rawValue.map { $0 }
+            name.removeFirst()
+            name.insert(Character(rawValue.first!.uppercased()), at: 0)
+            return "\(String(name))"
         }
     }
 }

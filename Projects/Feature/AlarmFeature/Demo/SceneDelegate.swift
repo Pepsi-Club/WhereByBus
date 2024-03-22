@@ -1,6 +1,8 @@
 import UIKit
 
 import AlarmFeature
+import Domain
+import FeatureDependency
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -16,8 +18,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
                 
-        let alarmCoordinator = DefaultAlarmCoordinator(
-            navigationController: navigationController
+        let alarmCoordinator = DefaultRegularAlarmCoordinator(
+            navigationController: navigationController,
+            coordinatorProvider: MockCoordinatorProvider()
         )
         alarmCoordinator.start()
     }

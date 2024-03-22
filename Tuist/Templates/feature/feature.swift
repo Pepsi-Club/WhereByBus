@@ -23,8 +23,10 @@ private let template = Template(
         // MARK: Coordinator, ViewController, ViewModel
         .file(path: projectPath(with: "Sources/ViewModel/\(nameAttribute)ViewModel.swift"), templatePath: "viewModel.stencil"),
         .file(path: projectPath(with: "Sources/ViewController/\(nameAttribute)ViewController.swift"), templatePath: "viewContoller.stencil"),
-        .file(path: projectPath(with: "Sources/Coordinator/\(nameAttribute)Coordinator.swift"), templatePath: "coordinator.stencil"),
+//        .file(path: projectPath(with: "Sources/Coordinator/\(nameAttribute)Coordinator.swift"), templatePath: "coordinator.stencil"),
         .file(path: projectPath(with: "Sources/Coordinator/Dafault\(nameAttribute)Coordinator.swift"), templatePath: "defaultCoordinator.stencil"),
+        // MARK: FeatureDependency Coordinator Protocol
+        .file(path: "Projects/FeatureDependency/Sources/Coordinator/\(nameAttribute)Coordinator.swift", templatePath: "coordinator.stencil"),
         // MARK: UnitTests
 //        .file(path: projectPath(with: "Tests/\(nameAttribute)FeatureTests.swift"), templatePath: "tests.stencil"),
     ]

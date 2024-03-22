@@ -3,7 +3,8 @@ import UIKit
 import FeatureDependency
 
 public final class Default{{ name }}Coordinator: {{ name }}Coordinator {
-    public var childCoordinators: [Coordinator] = []
+    public var parent: Coordinator?
+    public var childs: [Coordinator] = []
     public var navigationController: UINavigationController
     
     public init(navigationController: UINavigationController) {

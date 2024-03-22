@@ -19,7 +19,10 @@ let spm = SwiftPackageManagerDependencies(
             url: $0.url,
             requirement: .upToNextMajor(from: $0.upToNextMajor)
         )
-    }
+    }, productTypes: [
+        "RxCocoa": .framework,
+        "RxCocoaRuntime": .framework,
+    ]
 )
 
 let dependencies = Dependencies(

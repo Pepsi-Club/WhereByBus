@@ -1,5 +1,6 @@
 import UIKit
 
+import FeatureDependency
 import SearchFeature
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -15,10 +16,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-                
+        
         let searchCoordinator = DefaultSearchCoordinator(
-            navigationController: navigationController
+            parent: nil,
+            navigationController: navigationController,
+            coordinatorProvider: MockCoordinatorProvider(), 
+            flow: .fromAlarm
         )
+        
         searchCoordinator.start()
     }
 

@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeProject(
     name: "DesignSystem",
-    moduleType: .staticFramework,
+    moduleType: .dynamicFramework,
     hasResource: true,
     dependencies: []
 )

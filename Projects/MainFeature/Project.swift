@@ -3,6 +3,6 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeProject(
     name: "MainFeature",
-    moduleType: .staticFramework,
+    moduleType: .dynamicFramework,
     dependencies: .Presentation.allCases.map { $0.dependency }
 )

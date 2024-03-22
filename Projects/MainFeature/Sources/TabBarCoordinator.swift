@@ -8,17 +8,26 @@
 
 import UIKit
 
+import DesignSystem
+
 import FeatureDependency
 import HomeFeature
 import AlarmFeature
 import SettingsFeature
 
 public final class TabBarCoordinator: Coordinator {
-    public var childCoordinators: [Coordinator] = []
+    public var parent: Coordinator?
+    public var childs: [Coordinator] = []
     public var navigationController: UINavigationController
+    public let coordinatorProvider: CoordinatorProvider
+    public var coordinatorType: CoordinatorType = .tab
     
-    public init(navigationController: UINavigationController) {
+    public init(
+        navigationController: UINavigationController,
+        coordinatorProvider: CoordinatorProvider
+    ) {
         self.navigationController = navigationController
+        self.coordinatorProvider = coordinatorProvider
     }
     
     public func start() {
@@ -27,6 +36,14 @@ public final class TabBarCoordinator: Coordinator {
     
     private func setupTabBarController() {
         let tabBarController = TabBarViewController()
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = DesignSystemAsset.gray2.color
+        
+        tabBarController.tabBar.standardAppearance = appearance
+        tabBarController.tabBar.scrollEdgeAppearance = 
+        tabBarController.tabBar.standardAppearance
         
         navigationController.setViewControllers(
             [tabBarController], animated: true
@@ -37,6 +54,7 @@ public final class TabBarCoordinator: Coordinator {
         }
         
         tabBarController.viewControllers = viewControllers
+        
     }
     
     private func makeNavigationController(
@@ -59,18 +77,21 @@ public final class TabBarCoordinator: Coordinator {
         switch tabKind {
         case .home:
             coordinator = DefaultHomeCoordinator(
-                navigationController: navigationController
+                parent: self, 
+                navigationController: navigationController,
+                coordinatorProvider: coordinatorProvider
             )
         case .settings:
             coordinator = DefaultSettingsCoordinator(
                 navigationController: navigationController
             )
         case .alarm:
-            coordinator = DefaultAlarmCoordinator(
-                navigationController: navigationController
+            coordinator = DefaultRegularAlarmCoordinator(
+                navigationController: navigationController, 
+                coordinatorProvider: coordinatorProvider
             )
         }
-        childCoordinators.append(coordinator)
+        childs.append(coordinator)
         coordinator.start()
     }
 }

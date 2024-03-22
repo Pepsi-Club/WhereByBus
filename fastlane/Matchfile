@@ -5,4 +5,4 @@ storage_mode("git")
 
 type("development")
 
-app_identifier("com.Pepsi-Club.BusComing")
+app_identifier(["com.Pepsi-Club.WhereMyBus"])

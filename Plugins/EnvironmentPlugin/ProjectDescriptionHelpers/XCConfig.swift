@@ -107,7 +107,7 @@ public extension SettingsDictionary {
         merging(
             [
                 "CODE_SIGN_STYLE": .string("Manual"),
-                "DEVELOPMENT_TEAM": .string("ASU4PNB5MG"),
+                "DEVELOPMENT_TEAM": .string(.teamId),
                 "CODE_SIGN_IDENTITY": .string("$(CODE_SIGN_IDENTITY)")
             ]
         )

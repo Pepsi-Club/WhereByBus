@@ -22,7 +22,7 @@ enum MainTab: Int, CaseIterable {
         case .alarm:
             return .init(
                 title: "알람",
-                image: .init(systemName: "bell.badge"),
+                image: .init(systemName: "bell"),
                 tag: rawValue
             )
         case .settings:

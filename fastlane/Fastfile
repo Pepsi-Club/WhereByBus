@@ -1,21 +1,107 @@
+APP_NAME = "WhereMyBus"
+SCHEME = "App"
+
 default_platform(:ios)
 
 platform :ios do
-  desc "Download Ignored"
-  lane :getig do |options|
-    Dir.chdir("../") do
-      github_access_token = sh("git config --global user.password")
-      sh("make download-privates token=#{github_access_token}")
+    desc "Download Ignored"
+    lane :getig do |options|
+        Dir.chdir("../") do
+            github_access_token = sh("git config --global user.password")
+            sh("make download-privates token=#{github_access_token}")
+        end
     end
-  end
 
-  desc "Set Project"
-  lane :setpj do |options|
-    Dir.chdir("../") do
-      sh("tuist clean")
-      sh("tuist fetch")
-      sh("tuist generate")
-      sh("fastlane match development --readonly")
+    desc "Set Project"
+    lane :setpj do |options|
+        Dir.chdir("../") do
+            sh("tuist clean")
+            sh("tuist fetch")
+            sh("tuist generate")
+            match(
+                type: "development",
+                git_url: ENV["MATCH_URL"],
+                keychain_password: ENV["MATCH_PASSWORD"],
+                app_identifier:[
+                    "com.Pepsi-Club.WhereMyBus"
+                ],
+                readonly: true
+            )
+            match(
+                type: "appstore",
+                git_url: ENV["MATCH_URL"],
+                keychain_password: ENV["MATCH_PASSWORD"],
+                app_identifier:[
+                    "com.Pepsi-Club.WhereMyBus"
+                ],
+                readonly: true
+            )
+        end
     end
-  end
+    
+    desc "local Push to TestFlight"
+    lane :tf_local do |options|
+        app_store_connect_api_key(
+            key_id: ENV['APP_STORE_KEY_ID'],
+            issuer_id: ENV['APP_STORE_ISSUER_ID'],
+            key_content: ENV['APP_STORE_PRIVATE_KEY']
+        )
+        
+        match(
+            type: "appstore",
+            git_url: ENV["MATCH_URL"],
+            keychain_password: ENV["MATCH_PASSWORD"],
+            app_identifier: [
+                "com.Pepsi-Club.WhereMyBus"
+            ],
+            readonly: true
+        )
+        
+        build_app(
+            clean: true,
+            workspace: "#{APP_NAME}.xcworkspace",
+            scheme: "#{SCHEME}",
+            export_method: "app-store",
+        )
+        
+        upload_to_testflight(skip_waiting_for_build_processing: true)
+    end
+    
+    desc "Remote Push to TestFlight"
+    lane :tf_remote do |options|
+        create_keychain(
+            name: ENV["KEYCHAIN_NAME"],
+            password: ENV["KEYCHAIN_PASSWORD"],
+            timeout: 1800,
+            default_keychain: true,
+            unlock: true,
+            lock_when_sleeps: false
+        )
+
+        app_store_connect_api_key(
+            key_id: ENV['APP_STORE_KEY_ID'],
+            issuer_id: ENV['APP_STORE_ISSUER_ID'],
+            key_content: ENV['APP_STORE_PRIVATE_KEY'],
+            is_key_content_base64: true,
+            in_house: false
+        )
+        
+        match(
+            type: "appstore",
+            git_url: ENV["MATCH_URL"],
+            keychain_password: ENV["MATCH_PASSWORD"],
+            app_identifier: [
+                "com.Pepsi-Club.WhereMyBus"
+            ],
+            readonly: true
+        )
+        
+        build_app(
+            workspace: "#{APP_NAME}.xcworkspace",
+            scheme: "#{SCHEME}",
+            export_method: "app-store"
+        )
+
+        upload_to_testflight(skip_waiting_for_build_processing: true)
+    end
 end

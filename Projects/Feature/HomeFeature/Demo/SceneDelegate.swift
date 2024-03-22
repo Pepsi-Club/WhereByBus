@@ -1,5 +1,7 @@
 import UIKit
 
+import Domain
+import FeatureDependency
 import HomeFeature
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -17,7 +19,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
                 
         let homeCoordinator = DefaultHomeCoordinator(
-            navigationController: navigationController
+            parent: nil,
+            navigationController: navigationController, 
+            coordinatorProvider: MockCoordinatorProvider()
         )
         homeCoordinator.start()
     }

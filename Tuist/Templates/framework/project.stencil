@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeProject(
     name: "{{ name }}",
-    moduleType: .framework,
+    moduleType: .dynamicFramework,
     isTestable: true,
     dependencies: [
     ]
