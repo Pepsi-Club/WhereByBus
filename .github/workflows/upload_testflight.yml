@@ -14,7 +14,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      
+            
       - name: Bring ignored files
         uses: actions/checkout@v3
         with:
@@ -48,6 +48,9 @@ jobs:
 
       - name: Tuist generate
         run: tuist generate
+
+      - name: Cocoapods Install
+        run: pod install
 
       - name: Fastlane Upload Testflight
         run: fastlane tf_remote

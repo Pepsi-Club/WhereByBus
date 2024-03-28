@@ -3,6 +3,6 @@ git_url(url)
 
 storage_mode("git")
 
-type("development")
+type("appstore")
 
 app_identifier(["com.Pepsi-Club.WhereMyBus"])
