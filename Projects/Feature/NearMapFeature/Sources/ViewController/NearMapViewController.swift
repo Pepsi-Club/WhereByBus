@@ -56,6 +56,7 @@ public final class NearMapViewController: UIViewController {
     }
     
     private func configureUI() {
+        view.backgroundColor = .white
         [busStopInformationView, naverMapView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

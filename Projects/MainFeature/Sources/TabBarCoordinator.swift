@@ -39,22 +39,16 @@ public final class TabBarCoordinator: Coordinator {
         
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = DesignSystemAsset.gray2.color
-        
         tabBarController.tabBar.standardAppearance = appearance
-        tabBarController.tabBar.scrollEdgeAppearance = 
-        tabBarController.tabBar.standardAppearance
+        tabBarController.tabBar.scrollEdgeAppearance = appearance
         
         navigationController.setViewControllers(
             [tabBarController], animated: true
         )
-        
         let viewControllers = MainTab.allCases.map {
             makeNavigationController(tabKind: $0)
         }
-        
         tabBarController.viewControllers = viewControllers
-        
     }
     
     private func makeNavigationController(
@@ -62,6 +56,9 @@ public final class TabBarCoordinator: Coordinator {
     ) -> UINavigationController {
         let navigationController = UINavigationController()
         navigationController.tabBarItem = tabKind.tabItem
+        navigationController.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black
+        ]
         setupChildCoordinators(
             tabKind: tabKind,
             navigationController: navigationController
